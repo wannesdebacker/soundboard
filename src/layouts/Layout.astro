@@ -1,0 +1,101 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<ViewTransitions />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="container">
+			<slot />
+		</div>
+	</body>
+</html>
+
+<style is:global>
+	body {
+		margin: 0;
+	}
+
+	.container {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 1rem;
+	}
+
+	.list {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		gap: 1rem;
+	}
+
+	.list > li {
+		display: inline-flex;
+	}
+
+	.list--stacked {
+		flex-direction: column;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-family: Comic Sans MS, Comic Sans, cursive;
+		margin: 0;
+		font-size: 4rem;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	h1 a,
+	h2 a,
+	h3 a,
+	h4 a,
+	h5 a,
+	h6 a {
+		margin-right: 0.5em;
+	}
+
+	a:hover,
+	a:focus {
+		text-decoration: underline;
+	}
+
+	h2 {
+		font-size: 3rem;
+	}
+
+	h3 {
+		font-size: 2rem;
+	}
+
+	h4 {
+		font-size: 1.5rem;
+	}
+
+	h5 {
+		font-size: 1.25rem;
+	}
+
+	h6 {
+		font-size: 1rem;
+	}
+</style>

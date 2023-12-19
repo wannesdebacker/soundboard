@@ -1,0 +1,68 @@
+---
+import AudioPlayer from "./AudioPlayer.tsx";
+import { getSoundFiles, getSoundFolders } from "../lib/";
+
+const sounds = getSoundFiles();
+const folders = getSoundFolders();
+---
+
+<section id="sounds" transition:persist="media-player">
+    <div class="container" id="scroll-anchor">
+        <button class="nes-btn is-primary" data-stop-button>Stop</button>
+    </div>
+    <div class="container">
+        <ul class="list list--stacked">
+            {
+                folders.length > 0 ? (
+                    folders.map((folder) => {
+                        if (sounds[folder] && sounds[folder].length > 0) {
+                            return (
+                                <>
+                                    <h2>
+                                        <a
+                                            id={`#${folder}`}
+                                            href={`#${folder}`}
+                                        >#</a>
+                                        {folder}
+                                    </h2>
+                                    <ul class="list">
+                                        {sounds[folder].map((sound) => {
+                                            const { name, location } = sound;
+                                            return (
+                                                <li>
+                                                    <AudioPlayer
+                                                        {...{
+                                                            src: location,
+                                                            title: name,
+                                                        }}
+                                                        client:load
+                                                    />
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </>
+                            );
+                        }
+                    })
+                ) : (
+                    <li>No sound folders found.</li>
+                )
+            }
+        </ul>
+    </div>
+</section>
+
+<script>
+    const stopThatRacket = () => {
+        const audioElements = document.querySelectorAll("audio");
+        audioElements.forEach((audio) => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+    };
+
+    document
+        .querySelector("[data-stop-button]")
+        .addEventListener("click", stopThatRacket);
+</script>

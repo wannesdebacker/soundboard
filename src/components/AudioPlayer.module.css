@@ -1,0 +1,42 @@
+.audio-button {
+    padding: min(1.5vh, 1em) min(1.5vw, 1em);
+    font-family: Comic Sans MS, Comic Sans, cursive;
+    background-color: #222;
+    transition: 192ms linear background-color;
+    border-radius: 2px;
+}
+
+.audio-button__text {
+    background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.audio-button:focus {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25);
+}
+
+.audio-button:focus,
+.audio-button:hover {
+    background-color: #111;
+}
+
+.audio-button:active {
+    background-color: #000;
+}
+
+.audio-button:focus .audio-button__text,
+.audio-button:hover .audio-button__text {
+    font-style: italic;
+}
+
+.audio-button__a11y-text {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    width: 1px;
+}
