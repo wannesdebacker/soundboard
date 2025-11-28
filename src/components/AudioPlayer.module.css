@@ -15,11 +15,11 @@
     font-weight: bold;
 }
 
-.audio-button:focus {
+.audio-button:focus-visible {
     box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25);
 }
 
-.audio-button:focus,
+.audio-button:focus-visible,
 .audio-button:hover {
     background-color: #111;
 }
@@ -28,7 +28,7 @@
     background-color: #000;
 }
 
-.audio-button:focus .audio-button__text,
+.audio-button:focus-visible .audio-button__text,
 .audio-button:hover .audio-button__text {
     font-style: italic;
 }

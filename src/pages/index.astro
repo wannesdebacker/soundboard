@@ -1,9 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Soundboard from '../components/Soundboard.astro';
+import Layout from "../layouts/Layout.astro";
+import Soundboard from "../components/Soundboard.astro";
 ---
 
 <Layout title="Welcome to Astro.">
-	<a href="/contact">Contact</a>
-	<Soundboard transition:name="media-player" transition:persist />
+  <Soundboard transition:name="media-player" transition:persist />
 </Layout>
