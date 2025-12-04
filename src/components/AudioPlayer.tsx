@@ -13,6 +13,8 @@ const AudioPlayer: Component<AudioPlayerProps> = (props) => {
   let audioRef: HTMLAudioElement;
   const [copySuccess, setCopySuccess] = createSignal<boolean>(false);
 
+  const encodedSrc = () => props.src.split('/').map(segment => encodeURIComponent(segment)).join('/');
+
   const playAudio = () => {
     document.querySelectorAll("audio").forEach((audio) => {
       if (audio !== audioRef) {
@@ -26,7 +28,7 @@ const AudioPlayer: Component<AudioPlayerProps> = (props) => {
   };
 
   const shareSound = async () => {
-    const mp3Url = `${window.location.origin}${props.src}`;
+    const mp3Url = `${window.location.origin}${encodedSrc()}`;
 
     try {
       await navigator.clipboard.writeText(mp3Url);
