@@ -26,12 +26,16 @@ const folders = getSoundFolders();
                   <ul class="list">
                     {sounds[folder].map((sound) => {
                       const { name, location } = sound;
+                      const base = import.meta.env.BASE_URL || '/';
+                      const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+                      const fullPath = `${normalizedBase}/${location}`;
                       return (
                         <li>
                           <AudioPlayer
                             {...{
-                              src: location,
+                              src: fullPath,
                               title: name,
+                              folder: folder,
                             }}
                             client:load
                           />

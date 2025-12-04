@@ -1,3 +1,8 @@
+.audio-player-container {
+    display: flex;
+    align-items: center;
+}
+
 .audio-button {
     padding: min(1.5vh, 1em) min(1.5vw, 1em);
     font-family: Comic Sans MS, Comic Sans, cursive;
@@ -39,4 +44,20 @@
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
     width: 1px;
+}
+
+.audio-share-button {
+    width: 50px;
+    height: 100%;
+    border: 1px solid #222;
+    color: #222;
+    appearance: none;
+    background-color: transparent;
+    transition: 192ms linear background-color, 192ms linear color, 192ms linear border;
+}
+
+.audio-share-button:hover {
+    background-color: #222;
+    color: white;
+    border: transparent;
 }
