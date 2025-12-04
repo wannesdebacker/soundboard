@@ -5,6 +5,7 @@ interface AudioPlayerProps {
   title: string;
   src: string;
   type?: string;
+  shareUrl?: string;
 }
 
 type Component<P = {}> = (props: P) => JSX.Element;
@@ -28,10 +29,12 @@ const AudioPlayer: Component<AudioPlayerProps> = (props) => {
   };
 
   const shareSound = async () => {
-    const mp3Url = `${window.location.origin}${encodedSrc()}`;
+    const shareLink = props.shareUrl
+      ? `${window.location.origin}${props.shareUrl}`
+      : `${window.location.origin}${encodedSrc()}`;
 
     try {
-      await navigator.clipboard.writeText(mp3Url);
+      await navigator.clipboard.writeText(shareLink);
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
@@ -54,7 +57,7 @@ const AudioPlayer: Component<AudioPlayerProps> = (props) => {
         {copySuccess() ? "✓" : "Share"}
       </button>
       <audio ref={audioRef} preload="none">
-        <source src={props.src} type={props.type || "audio/mpeg"} />
+        <source src={encodedSrc()} type={props.type || "audio/mpeg"} />
       </audio>
     </div>
   );

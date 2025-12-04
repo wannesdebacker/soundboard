@@ -29,12 +29,15 @@ const folders = getSoundFolders();
                       const base = import.meta.env.BASE_URL || '/';
                       const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
                       const fullPath = `${normalizedBase}/${location}`;
+                      const slug = `${folder}/${name}`.toLowerCase().replace(/\s+/g, '-');
+                      const shareUrl = `${normalizedBase}/sound/${slug}`;
                       return (
                         <li>
                           <AudioPlayer
                             {...{
                               src: fullPath,
                               title: name,
+                              shareUrl: shareUrl,
                             }}
                             client:load
                           />

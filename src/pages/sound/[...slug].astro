@@ -1,0 +1,87 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AudioPlayer from "../../components/AudioPlayer.tsx";
+import { getSoundFiles, getSoundFolders } from "../../lib/";
+
+export async function getStaticPaths() {
+  const sounds = getSoundFiles();
+  const folders = getSoundFolders();
+
+  const paths = [];
+  folders.forEach((folder) => {
+    if (sounds[folder]) {
+      sounds[folder].forEach((sound) => {
+        const base = import.meta.env.BASE_URL || '/';
+        const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+        const fullPath = `${normalizedBase}/${sound.location}`;
+
+        paths.push({
+          params: {
+            slug: `${folder}/${sound.name}`.toLowerCase().replace(/\s+/g, '-')
+          },
+          props: {
+            soundName: sound.name,
+            soundPath: fullPath,
+            folderName: folder,
+            audioUrl: sound.location
+          }
+        });
+      });
+    }
+  });
+
+  return paths;
+}
+
+const { soundName, soundPath, folderName, audioUrl } = Astro.props;
+const site = Astro.site?.origin || 'https://wannesdebacker.github.io';
+const baseURL = import.meta.env.BASE_URL || '/';
+const normalizedBase = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
+const audioPath = audioUrl.replace('./public', '').replace('/public', '');
+const encodedAudioPath = audioPath.split('/').filter(Boolean).map(segment => encodeURIComponent(segment)).join('/');
+const fullAudioUrl = `${site}${normalizedBase}/${encodedAudioPath}`;
+const pageUrl = Astro.url.href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{soundName} - Soundboard</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="music.song" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={soundName} />
+    <meta property="og:description" content={`Listen to ${soundName} from ${folderName}`} />
+    <meta property="og:audio" content={fullAudioUrl} />
+    <meta property="og:audio:type" content="audio/mpeg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="player" />
+    <meta name="twitter:title" content={soundName} />
+    <meta name="twitter:description" content={`Listen to ${soundName} from ${folderName}`} />
+    <meta name="twitter:player" content={fullAudioUrl} />
+
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <Layout title={`${soundName} - Soundboard`}>
+      <div style="max-width: 600px; margin: 2rem auto; text-align: center;">
+        <h1>{soundName}</h1>
+        <p style="color: #666; margin-bottom: 2rem;">from {folderName}</p>
+
+        <AudioPlayer
+          src={soundPath}
+          title={soundName}
+          client:load
+        />
+
+        <p style="margin-top: 2rem;">
+          <a href={`${baseURL}/`}>← Back to all sounds</a>
+        </p>
+      </div>
+    </Layout>
+  </body>
+</html>
