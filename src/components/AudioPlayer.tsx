@@ -5,7 +5,6 @@ interface AudioPlayerProps {
   title: string;
   src: string;
   type?: string;
-  folder?: string;
 }
 
 type Component<P = {}> = (props: P) => JSX.Element;
@@ -27,13 +26,10 @@ const AudioPlayer: Component<AudioPlayerProps> = (props) => {
   };
 
   const shareSound = async () => {
-    const fileName = props.src.split("/").pop();
-    const currentPath = window.location.pathname;
-    const basePath = currentPath.includes('/soundboard') ? '/soundboard' : '';
-    const shareUrl = `${window.location.origin}${basePath}/share/${props.folder}/${fileName}`;
+    const mp3Url = `${window.location.origin}${props.src}`;
 
     try {
-      await navigator.clipboard.writeText(shareUrl);
+      await navigator.clipboard.writeText(mp3Url);
       setCopySuccess(true);
       setTimeout(() => setCopySuccess(false), 2000);
     } catch (err) {
